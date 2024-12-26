@@ -6,22 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 2c989cfb60048dc57a49472228381574bff351c31896bdcd621991f68c0f9cc9
 
 build:
   noarch: python
-  number: 1
+  number: 2
   script: "{{ PYTHON }} -m pip install . -vv"
   entry_points:
     - cde = chemdataextractor.cli:cli
 
 requirements:
   host:
-    - python
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
     - appdirs
     - beautifulsoup4
     - click
@@ -37,6 +37,8 @@ requirements:
     - six
 
 test:
+  requires:
+    - python {{ python_min }}
   commands:
     - cde
   imports:
